@@ -1,0 +1,10 @@
+streamlit
+pillow
+pydantic
+pandas
+
+google-generativeai
+python-dotenv
+
+openpyxl
+groq
