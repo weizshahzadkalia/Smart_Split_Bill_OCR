@@ -1,0 +1,158 @@
+1. Evaluasi Model Pembaca Bill (Gemini vs Groq)
+
+A. Akurasi Ekstraksi
+Gemini menunjukkan hasil yang lebih konsisten pada berbagai jenis receipt.
+
+Pada receipt "El Chalan Restaurant", Groq gagal mengenali informasi dengan benar, sementara Gemini masih mampu menghasilkan ekstraksi yang sesuai.
+
+Hal ini menunjukkan bahwa Gemini lebih robust terhadap:
+
+kualitas gambar yang rendah
+pencahayaan yang tidak ideal
+layout receipt yang kompleks
+Kelemahan Groq
+Sensitif terhadap kualitas gambar
+Lebih mudah menghasilkan hasil ekstraksi yang tidak lengkap
+Tidak selalu mampu mempertahankan struktur JSON yang konsisten pada receipt tertentu
+Kelemahan Gemini
+Waktu inferensi lebih lama
+Ketergantungan terhadap layanan cloud Google
+Biaya penggunaan cenderung lebih tinggi pada skala besar
+
+B. Kecepatan Inferensi
+Groq secara konsisten menghasilkan waktu inferensi yang jauh lebih cepat dibandingkan Gemini.
+
+Kelebihan Groq
+Respons sangat cepat
+Cocok untuk aplikasi real-time
+Pengalaman pengguna lebih baik saat menunggu hasil OCR
+
+Kelemahan Groq
+Kecepatan tinggi terkadang mengorbankan akurasi
+Tidak selalu stabil pada receipt yang sulit dibaca
+
+Kesimpulan Model
+
+Gemini lebih cocok jika:
+
+akurasi menjadi prioritas utama
+data receipt memiliki variasi tinggi
+kesalahan ekstraksi harus diminimalkan
+
+Groq lebih cocok jika:
+
+kecepatan menjadi prioritas utama
+receipt relatif bersih dan mudah dibaca
+aplikasi membutuhkan respons cepat
+
+2. Evaluasi Produk Web Secara Keseluruhan
+
+A. Fitur yang Berhasil Diimplementasikan
+Receipt OCR
+
+Sistem mampu:
+
+mengunggah gambar receipt
+mengekstrak informasi secara otomatis
+menampilkan hasil dalam format JSON terstruktur
+Split Bill
+
+Pengguna dapat:
+
+memasukkan nama peserta
+menentukan pemilik setiap item
+menghitung total pembayaran masing-masing orang
+Benchmarking
+
+Sistem dapat:
+
+membandingkan dua model AI
+menyimpan runtime
+menampilkan hasil benchmark
+Export
+
+Sistem mendukung:
+
+CSV export
+Excel export
+
+B. Kelemahan Produk
+1. Belum Ada Validasi Hasil OCR
+
+Saat model menghasilkan ekstraksi yang salah:
+
+misalnya:
+Store Name salah
+Total salah
+Item hilang
+
+aplikasi langsung menggunakan hasil tersebut.
+
+Dampak
+
+Kesalahan OCR dapat menghasilkan perhitungan split bill yang salah.
+
+2. Belum Ada Edit Manual
+
+Saat OCR salah membaca item:
+Pizza 25
+↓
+Pizz4 25
+
+pengguna tidak dapat memperbaiki hasil secara langsung.
+
+Dampak
+
+Pengguna harus mengulang proses upload atau menerima hasil yang salah.
+
+3. Belum Ada Multi-User Item Sharing
+
+Saat ini:
+
+1 item
+↓
+1 orang
+
+Padahal dalam kasus nyata:
+
+1 Pizza
+↓
+2 orang berbagi
+
+belum dapat dilakukan.
+
+4. Benchmark Masih Terbatas
+
+Benchmark hanya menggunakan:
+
+runtime
+observasi visual
+
+Belum mengukur:
+
+precision
+recall
+extraction accuracy
+JSON validity rate
+5. Belum Ada Penyimpanan Data
+
+Setelah aplikasi ditutup:
+
+history hilang
+
+karena belum menggunakan database.
+
+6. Ketergantungan API Eksternal
+
+Aplikasi bergantung pada:
+
+Gemini API
+Groq API
+
+Jika:
+
+internet terputus
+API limit tercapai
+API mengalami gangguan
+
+maka aplikasi tidak dapat digunakan.
